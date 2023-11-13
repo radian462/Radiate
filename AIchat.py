@@ -1,7 +1,6 @@
 import fireworks.client
-import os
 
-TOKEN = os.getenv("fireworks_api")
+TOKEN = "PV0fMsm8GAg9F7rqrYuLHl47GLI9xq2DD4d2kG6Nzf5Rc2lM"
 
 fireworks.client.api_key = TOKEN
 
