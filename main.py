@@ -1,6 +1,5 @@
 import AIchat
 import discord
-import os
 
 client = discord.Client(intents=discord.Intents.default())
 
@@ -14,7 +13,6 @@ async def on_message(message):
         return
 
     if client.user.mentioned_in(message):
-      await message.channel.send(AIchat.chatfireworks(message.clean_content.replace('@radianのbot test', '')))
+      await message.channel.send(AIchat.chatfireworks(message.clean_content.replace('@radianのbot', '')))
 
-TOKEN = os.getenv("Discord_token")
-client.run(TOKEN)
+client.run("AQe5D3Qd0MK5P2CGkm-h6sSFm6PfNrxp")
