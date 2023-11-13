@@ -1,8 +1,6 @@
 import fireworks.client
 
-TOKEN = "PV0fMsm8GAg9F7rqrYuLHl47GLI9xq2DD4d2kG6Nzf5Rc2lM"
-
-fireworks.client.api_key = TOKEN
+fireworks.client.api_key = "PV0fMsm8GAg9F7rqrYuLHl47GLI9xq2DD4d2kG6Nzf5Rc2lM"
 
 def chatfireworks(question):
   completion = fireworks.client.ChatCompletion.create(
