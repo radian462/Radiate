@@ -16,4 +16,4 @@ async def on_message(message):
     if client.user.mentioned_in(message):
       await message.channel.send(AIchat.chatfireworks(message.clean_content.replace('@radianのbot', '')))
 
-client.run("AQe5D3Qd0MK5P2CGkm-h6sSFm6PfNrxp")
+client.run("zHD334TQBRc_WOlhqiCMt_3_C2HRM_Pf")
