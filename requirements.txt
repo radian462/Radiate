@@ -1,4 +1,4 @@
-Flask==2.2.3
+Flask==2.3.3
 cl-chess==1.2.7
 discord==2.3.2
 FireWorks==2.0.3
