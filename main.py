@@ -14,7 +14,7 @@ async def on_message(message):
         return
 
     if client.user.mentioned_in(message):
-      await message.channel.send(AIchat.chatfireworks(message.clean_content.replace('@radianのbot', '')))
+      await message.channel.send(AIchat.chatfireworks(message.clean_content.replace('@radianのbot test', '')))
 
 TOKEN = os.getenv("Discord_token")
 client.run(TOKEN)
