@@ -1,6 +1,9 @@
 import fireworks.client
+import os
 
-fireworks.client.api_key = "PV0fMsm8GAg9F7rqrYuLHl47GLI9xq2DD4d2kG6Nzf5Rc2lM"
+TOKEN = os.getenv("fireworks_api")
+
+fireworks.client.api_key = TOKEN
 
 def chatfireworks(question):
   completion = fireworks.client.ChatCompletion.create(
