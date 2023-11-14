@@ -18,4 +18,5 @@ async def on_message(message):
       await message.channel.send(AIchat.chatfireworks(message.clean_content.replace('@radianのbot test', '')))
 
 TOKEN = os.getenv("Discord_token")
+keep_alive()
 client.run(TOKEN)
