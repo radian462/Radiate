@@ -1,0 +1,5 @@
+Flask==2.2.3
+cl-chess==1.2.7
+discord==2.3.2
+FireWorks==2.0.3
+fireworks-ai==0.8.1
