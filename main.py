@@ -25,6 +25,7 @@ async def on_message(message):
 @tree.command(name='deepl', description='DeepLで翻訳します') 
 @app_commands.describe(text="原文",lang="翻訳先の言語",lang2="翻訳先の言語")
 @discord.app_commands.choices(lang=[
+    discord.app_commands.Choice(name="lang2の言語を使う",value="lang2"),])
     discord.app_commands.Choice(name="日本語",value="JA"),
     discord.app_commands.Choice(name="英語(イギリス)",value="EN-GB"),
     discord.app_commands.Choice(name="英語(アメリカ)",value="EN-US"),
@@ -48,8 +49,7 @@ async def on_message(message):
     discord.app_commands.Choice(name="オランダ語",value="NL"),
     discord.app_commands.Choice(name="ポーランド語",value="PL"),
     discord.app_commands.Choice(name="ポルトガル語(ブラジル)",value="PT-BR"),
-    discord.app_commands.Choice(name="ポルトガル語(ブラジル除く全てのポルトガル語)",value="PT-PT"),
-    discord.app_commands.Choice(name="lang2の言語を使う",value="lang2"),])
+    discord.app_commands.Choice(name="ポルトガル語(ブラジル除く全てのポルトガル語)",value="PT-PT"
 
 @discord.app_commands.choices(lang2=[
     discord.app_commands.Choice(name="ルーマニア語",value="RO"),
