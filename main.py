@@ -1,5 +1,6 @@
 import AIchat
 import Translate
+import WolfarmAlpha
 from keep_alive import keep_alive
 import discord
 import os
@@ -13,13 +14,23 @@ async def on_ready():
     print('起動しました')
     await tree.sync()
 
+#helpコマンド
+@tree.command(name='help', description='ヘルプを表示します')
+async def help(interaction: discord.Interaction):
+    embed = discord.Embed(title="ヘルプ")
+    embed.add_field(name="AIチャット",value="`@radianのbot [話す内容]`で会話できます\nELYZA-japanese-Llama-2-7bを搭載しています\n")
+    embed.add_field(name="DeepL翻訳",value="`/deepl [text] [lang] [lang2(省略可)]`で翻訳できます。\ntext:翻訳する文\nlang、lang2:翻訳する言語(選択肢の数の都合上分けました)\n※lang2の言語を使う場合はlangを「lang2の言語を使う」にしてください。\n対応言語:日本語, 英語(イギリス,アメリカ), 中国語(簡字体), 韓国語, ブルガリア語, チェコ語, デンマーク語, ドイツ語, ギリシャ語, エストニア語, スペイン語, フィンランド語, フランス語, ハンガリー語, インドネシア語, イタリア語, リトアニア語, ラトビア語, ノルウェー語(ブークモール), オランダ語, ポーランド語, ポルトガル語(ブラジル,ブラジル以外), ルーマニア語, ロシア語, スロバキア語, スロベニア語, スウェーデン語, トルコ語, ウクライナ語")
+    embed.add_field(name="WolfarmAlpha",value="WolfarmAlphaで計算ができます。\n`/wolfarmalpha [formula]`で計算できます。xの2乗はx^2と書けば出来ます。")
+    await interaction.response.send_message(embed=embed)
+
+#Llama2チャット
 @client.event
 async def on_message(message):
     if message.author.bot:
         return
 
     if client.user.mentioned_in(message):
-      await message.channel.send(AIchat.chatfireworks(message.clean_content.replace('@radianのbot', '')))
+      await message.channel.send(AIchat.chatfireworks(message.clean_content.replace('@radianのbot test', '')))
 
 #DeepL翻訳コマンド
 @tree.command(name='deepl', description='DeepLで翻訳します') 
@@ -61,7 +72,7 @@ async def on_message(message):
     discord.app_commands.Choice(name="ウクライナ語",value="UK"),])
 
 
-async def test(interaction: discord.Interaction,text:str,lang:str,lang2:str=None): 
+async def deepl(interaction: discord.Interaction,text:str,lang:str,lang2:str=None): 
   embed = discord.Embed(title="DeepL翻訳")
   embed.add_field(name="原文",value=f"{text}\n")
   
@@ -70,6 +81,13 @@ async def test(interaction: discord.Interaction,text:str,lang:str,lang2:str=None
   else:
     embed.add_field(name="翻訳結果",value=Translate.deepltranslate(text,lang2))
   await interaction.response.send_message(embed=embed)
+
+#Wolfalphaコマンド
+@tree.command(name='wolfarmalpha', description='WolfarmAlphaで計算します') 
+async def wolfarmalpha(interaction: discord.Interaction,formula:str):
+  await interaction.response.send_message(WolfarmAlpha.calc(formula))
+  
+  
 
 TOKEN = os.getenv("Discord_token")
 keep_alive()
