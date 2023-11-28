@@ -1,6 +1,8 @@
 import AIchat
 import Translate
 import WolfarmAlpha
+import Exchanging
+import datetime
 from keep_alive import keep_alive
 import discord
 import os
@@ -93,7 +95,67 @@ async def deepl(interaction: discord.Interaction,text:str,lang:str,lang2:str=Non
 async def wolfarmalpha(interaction: discord.Interaction,formula:str):
   await interaction.response.send_message(WolfarmAlpha.calc(formula))
   
-  
+#為替コマンド
+@tree.command(name='exchange', description='為替を表示します') 
+@app_commands.describe(currency="通貨1",currency2="通貨2")
+@discord.app_commands.choices(currency=[
+  discord.app_commands.Choice(name="円",value="JPY"),
+  discord.app_commands.Choice(name="ドル(アメリカ)",value="USD"),
+  discord.app_commands.Choice(name="ユーロ",value="EUR"),
+  discord.app_commands.Choice(name="ポンド",value="GBP"),
+  discord.app_commands.Choice(name="人民元",value="CNY"), 
+  discord.app_commands.Choice(name="ウォン",value="KRW"),
+  discord.app_commands.Choice(name="ドル(香港)",value="HKD"),
+  discord.app_commands.Choice(name="ドル(台湾)",value="TWD"),
+  discord.app_commands.Choice(name="ルピー(インド)",value="INR"), 
+  discord.app_commands.Choice(name="ルピア(インドネシア)",value="IDR"), 
+  discord.app_commands.Choice(name="ドル(シンガポール)",value="SGD"),
+  discord.app_commands.Choice(name="バーツ(タイ)",value="THB"),
+  discord.app_commands.Choice(name="ドル(オーストラリア)",value="AUD"), 
+  discord.app_commands.Choice(name="ドル(ニュージーランド)",value="NZD"), 
+  discord.app_commands.Choice(name="フラン(スイス)",value="CHF"),
+  discord.app_commands.Choice(name="リラ(トルコ)",value="TRY"),
+  discord.app_commands.Choice(name="ペソ(メキシコ)",value="MXN"),
+  discord.app_commands.Choice(name="ルーブル(ロシア)",value="RUB"),
+  discord.app_commands.Choice(name="ドル(カナダ)",value="CAD"),
+  discord.app_commands.Choice(name="レアル(ブラジル)",value="BRL"),
+  discord.app_commands.Choice(name="ビットコイン",value="BTC"),
+  discord.app_commands.Choice(name="イーサリアム",value="ETH"),
+  discord.app_commands.Choice(name="リップル",value="XRP"),
+  discord.app_commands.Choice(name="ライトコイン",value="LTC"),])
+
+@discord.app_commands.choices(currency2=[
+  discord.app_commands.Choice(name="円",value="JPY"),
+  discord.app_commands.Choice(name="ドル(アメリカ)",value="USD"),
+  discord.app_commands.Choice(name="ユーロ",value="EUR"),
+  discord.app_commands.Choice(name="ポンド",value="GBP"),
+  discord.app_commands.Choice(name="人民元",value="CNY"), 
+  discord.app_commands.Choice(name="ウォン",value="KRW"),
+  discord.app_commands.Choice(name="ドル(香港)",value="HKD"),
+  discord.app_commands.Choice(name="ドル(台湾)",value="TWD"),
+  discord.app_commands.Choice(name="ルピー(インド)",value="INR"), 
+  discord.app_commands.Choice(name="ルピア(インドネシア)",value="IDR"), 
+  discord.app_commands.Choice(name="ドル(シンガポール)",value="SGD"),
+  discord.app_commands.Choice(name="バーツ(タイ)",value="THB"),
+  discord.app_commands.Choice(name="ドル(オーストラリア)",value="AUD"), 
+  discord.app_commands.Choice(name="ドル(ニュージーランド)",value="NZD"), 
+  discord.app_commands.Choice(name="フラン(スイス)",value="CHF"),
+  discord.app_commands.Choice(name="リラ(トルコ)",value="TRY"),
+  discord.app_commands.Choice(name="ペソ(メキシコ)",value="MXN"),
+  discord.app_commands.Choice(name="ルーブル(ロシア)",value="RUB"),
+  discord.app_commands.Choice(name="ドル(カナダ)",value="CAD"),
+  discord.app_commands.Choice(name="レアル(ブラジル)",value="BRL"),
+  discord.app_commands.Choice(name="ビットコイン",value="BTC"),
+  discord.app_commands.Choice(name="イーサリアム",value="ETH"),
+  discord.app_commands.Choice(name="リップル",value="XRP"),
+  discord.app_commands.Choice(name="ライトコイン",value="LTC"),])
+
+async def exchange(interaction: discord.Interaction,currency:str,currency2:str):
+  await interaction.response.defer()
+  value = Exchanging.exchange(currency,currency2)
+  embed = discord.Embed(title="為替")
+  embed.add_field(name=f"1{currency}→{value}{currency2}",value=datetime.datetime.now())
+  await interaction.followup.send(embed=embed)
 
 TOKEN = os.getenv("Discord_token")
 keep_alive()
