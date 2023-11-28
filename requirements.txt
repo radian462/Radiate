@@ -3,3 +3,4 @@ discord==2.3.2
 fireworks-ai==0.8.1
 deepl==1.16.1
 wolframalpha==5.0.0
+gspread==5.12.0
