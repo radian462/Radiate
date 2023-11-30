@@ -5,10 +5,10 @@ import Exchanging
 import shorturl
 import datetime
 import qrcode
-from keep_alive import keep_alive
 import discord
 import os
 from discord import app_commands
+from keep_alive import keep_alive
 
 client = discord.Client(intents=discord.Intents.default())
 tree = app_commands.CommandTree(client)
