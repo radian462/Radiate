@@ -4,3 +4,5 @@ fireworks-ai==0.8.1
 deepl==1.16.1
 wolframalpha==5.0.0
 gspread==5.12.0
+requests==2.31.0
+qrcode==7.4.2
