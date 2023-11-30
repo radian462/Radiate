@@ -33,7 +33,8 @@ async def help(interaction: discord.Interaction):
     embed.add_field(name="・為替機能",value="/exchange [currency] [currency2]で為替を確認できます。[currency]→[currency2]の為替を表示します。一部仮想通貨に対応しています")
     embed.add_field(name="・短縮URL作成",value="/shorturl [url]で作成できます")
     embed.add_field(name="・QRコード作成",value="/qrcode [text]で作成できます ")
-
+    await interaction.response.send_message(embed=embed)
+    
 #Llama2チャット
 @client.event
 async def on_message(message):
