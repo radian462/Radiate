@@ -5,7 +5,7 @@ scopes = ['https://www.googleapis.com/auth/spreadsheets',
           'https://www.googleapis.com/auth/drive']
 
 credentials = Credentials.from_service_account_file(
-    "palm-2-405006-cb71860f13d0.json",
+    "function_file/palm-2-405006-cb71860f13d0.json",
     scopes=scopes
 )
 
