@@ -1,8 +1,8 @@
-import AIchat
-import Translate
-import WolfarmAlpha
-import Exchanging
-import shorturl
+import function_file.AIchat as AIchat
+import function_file.Translate as Translate
+import function_file.WolfarmAlpha as WolfarmAlpha
+import function_file.Exchanging as Exchanging
+import function_file.shorturl as shorturl
 import datetime
 import qrcode
 import discord
