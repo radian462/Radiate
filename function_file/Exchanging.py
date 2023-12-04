@@ -12,7 +12,7 @@ credentials = Credentials.from_service_account_file(
 gc = gspread.authorize(credentials)
 spreadsheet = gc.open_by_key('1TVwWMSxZtOgqvjIdzWvAMs_JSy8KDYt5lyA_bT0DOcw')
 
-def exchange(currency,currency2):
+def exchange(number,currency,currency2):
   spreadsheet.sheet1.update_acell("A1",f"=GOOGLEFINANCE(\"CURRENCY:{currency}{currency2}\")")
   spreadsheet.sheet1.update_acell("B1",number)
   return spreadsheet.sheet1.acell("C1").value
