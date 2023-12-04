@@ -101,7 +101,7 @@ async def wolfarmalpha(interaction: discord.Interaction,formula:str):
   
 #為替コマンド
 @tree.command(name='exchange', description='為替を表示します') 
-@app_commands.describe(currency="通貨1",currency2="通貨2")
+@app_commands.describe(number="数",currency="通貨1",currency2="通貨2")
 @discord.app_commands.choices(currency=[
   discord.app_commands.Choice(name="円",value="JPY"),
   discord.app_commands.Choice(name="ドル(アメリカ)",value="USD"),
