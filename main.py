@@ -154,11 +154,11 @@ async def wolfarmalpha(interaction: discord.Interaction,formula:str):
   discord.app_commands.Choice(name="リップル",value="XRP"),
   discord.app_commands.Choice(name="ライトコイン",value="LTC"),])
 
-async def exchange(interaction: discord.Interaction,currency:str,currency2:str):
+async def exchange(interaction: discord.Interaction,number:str,currency:str,currency2:str):
   await interaction.response.defer()
-  value = Exchanging.exchange(currency,currency2)
+  value = Exchanging.exchange(number,currency,currency2)
   embed = discord.Embed(title="為替")
-  embed.add_field(name=f"1{currency}→{value}{currency2}",value=datetime.datetime.now())
+  embed.add_field(name=f"{number}{currency}→{value}{currency2}",value=datetime.datetime.now())
   await interaction.followup.send(embed=embed)
 
 #短縮URL作成コマンド
