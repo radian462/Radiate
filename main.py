@@ -33,7 +33,7 @@ async def help(interaction: discord.Interaction):
     embed.add_field(name="・為替機能",value="/exchange [currency] [currency2]で為替を確認できます。[currency]→[currency2]の為替を表示します。一部仮想通貨に対応しています")
     embed.add_field(name="・短縮URL作成",value="/shorturl [url]で作成できます")
     embed.add_field(name="・QRコード作成",value="/qrcode [text]で作成できます ")
-    embed.add_field(name="・偽中国語作成",value="/fakechinese [text]で平仮名を削除します\n(アイデア元:People翻訳)")
+    embed.add_field(name="・偽中国語作成",value="/fakechinese [text]で平仮名を削除します\nカタカナを消すかどうかの設定があります\n(アイデア元:People翻訳)")
     await interaction.response.send_message(embed=embed)
     
 #Llama2チャット
@@ -176,7 +176,10 @@ async def qrcodemake(interaction: discord.Interaction,text:str):
 
 #偽中国語コマンド
 @tree.command(name='fakechinese', description='偽中国語を作成します') 
-async def fakechinese(interaction: discord.Interaction,text:str):
+@app_commands.describe(text="原文",deletekatakana="カタカナを削除するか")                              
+async def fakechinese(interaction: discord.Interaction,text:str,deletekatakana:bool=None):
+  if deletekatakana == True or deletekatakana == None:
+    text = re.sub('[ァ-ン]', '',text)
   await interaction.response.send_message(re.sub('[ぁ-ん]', '',text))
     
 keep_alive()
