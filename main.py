@@ -195,10 +195,7 @@ async def blackpaint(interaction: discord.Interaction,text:str):
   if painttimes < 1:
       painttimes = 1
 
-  while painttimes > 0:
-      if len(text) < 7:
-        paintlong = random.randint(2, len(text))
-      else:    
+  while painttimes > 0:    
         paintlong = random.randint(2, 7)
       paintplace = random.randint(firstnumber, len(text) - 7)
       text = (
