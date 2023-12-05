@@ -6,6 +6,7 @@ import function_file.shorturl as shorturl
 import datetime
 import qrcode
 import re
+import random
 import discord
 import json
 import os
@@ -22,7 +23,7 @@ async def on_ready():
 #機能リスト
 @tree.command(name='function_list', description='機能の一覧を表示します')
 async def function_list(interaction: discord.Interaction):
-  embed = discord.Embed(title="機能一覧",description="・AIチャット\n・DeepL翻訳\n・WolframAlpha計算知能\n・為替機能\n・短縮URL作成\n・QRコード作成\n・偽中国語作成")
+  embed = discord.Embed(title="機能一覧",description="・AIチャット\n・DeepL翻訳\n・WolframAlpha計算知能\n・為替機能\n・短縮URL作成\n・QRコード作成\n・偽中国語作成\n・文章黒塗り")
   await interaction.response.send_message(embed=embed)
 
 #helpコマンド
@@ -36,6 +37,7 @@ async def help(interaction: discord.Interaction):
     embed.add_field(name="・短縮URL作成",value="/shorturl [url]で作成できます")
     embed.add_field(name="・QRコード作成",value="/qrcode [text]で作成できます ")
     embed.add_field(name="・偽中国語作成",value="/fakechinese [text]で平仮名を削除します\nカタカナを消すかどうかの設定があります\n(アイデア元:People翻訳)")
+    embed.add_field(name="・文章黒塗り",value="/blackpaint [text]でランダムで文字を黒塗りします\n開示書類のような文を作れます")
     await interaction.response.send_message(embed=embed)
     
 #Llama2チャット
@@ -183,6 +185,28 @@ async def fakechinese(interaction: discord.Interaction,text:str,deletekatakana:b
   if deletekatakana == True or deletekatakana == None:
     text = re.sub('[ァ-ン]', '',text)
   await interaction.response.send_message(re.sub('[ぁ-ん]', '',text))
+
+#黒塗りコマンド
+@tree.command(name='blackpaint', description='ランダムで黒塗りします')
+@app_commands.describe(text="原文")                      
+async def blackpaint(interaction: discord.Interaction,text:str):
+  painttimes = len(text) // 15
+  firstnumber = 0
+  if painttimes < 1:
+      painttimes = 1
+
+  while painttimes > 0:
+      paintlong = random.randint(2, 7)
+      paintplace = random.randint(firstnumber, len(text) - 7)
+      text = (
+          text[:paintplace]
+          + "█" * paintlong
+          + text[paintplace + paintlong:]
+      )
+      firstnumber += paintlong
+      painttimes -= 1
+    
+  await interaction.response.send_message(text)
     
 keep_alive()
 client.run(os.getenv("Discord_token"))
