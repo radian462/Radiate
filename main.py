@@ -7,6 +7,7 @@ import datetime
 import qrcode
 import re
 import discord
+import json
 import os
 from discord import app_commands
 from keep_alive import keep_alive
