@@ -20,7 +20,7 @@ async def on_ready():
 #機能リスト
 @tree.command(name='function_list', description='機能の一覧を表示します')
 async def function_list(interaction: discord.Interaction):
-  embed = discord.Embed(title="機能一覧",description="・AIチャット\n・DeepL翻訳\n・WolframAlpha計算知能\n・為替機能\n・短縮URL作成\n・QRコード作成")
+  embed = discord.Embed(title="機能一覧",description="・AIチャット\n・DeepL翻訳\n・WolframAlpha計算知能\n・為替機能\n・短縮URL作成\n・QRコード作成\n・偽中国語作成")
   await interaction.response.send_message(embed=embed)
 
 #helpコマンド
@@ -33,7 +33,7 @@ async def help(interaction: discord.Interaction):
     embed.add_field(name="・為替機能",value="/exchange [currency] [currency2]で為替を確認できます。[currency]→[currency2]の為替を表示します。一部仮想通貨に対応しています")
     embed.add_field(name="・短縮URL作成",value="/shorturl [url]で作成できます")
     embed.add_field(name="・QRコード作成",value="/qrcode [text]で作成できます ")
-    embed.add_field(name="・偽中国語作成",value="/fakechinese [text]で平仮名を削除します ")
+    embed.add_field(name="・偽中国語作成",value="/fakechinese [text]で平仮名を削除します\n(アイデア元:People翻訳)")
     await interaction.response.send_message(embed=embed)
     
 #Llama2チャット
