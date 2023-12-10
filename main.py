@@ -207,6 +207,12 @@ async def blackpaint(interaction: discord.Interaction,text:str):
       painttimes -= 1
     
   await interaction.response.send_message(text)
+
+#2進数変換コマンド
+@tree.command(name='binary', description='2進数に変換します')
+@app_commands.describe(text="原文")                              
+async def fakechinese(interaction: discord.Interaction,text:str):
+  await interaction.response.send_message(''.join(format(ord(char), '08b') for char in text))
     
 keep_alive()
 client.run(os.getenv("Discord_token"))
