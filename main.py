@@ -47,7 +47,7 @@ async def on_message(message):
         return
 
     if client.user.mentioned_in(message):
-      await message.channel.send(AIchat.chatfireworks(message.clean_content.replace('@radianのbot test', '')))
+      await message.channel.send(AIchat.chatfireworks(message.clean_content.replace('@radianのbot', '')))
 
 #DeepL翻訳コマンド
 @tree.command(name='deepl', description='DeepLで翻訳します') 
