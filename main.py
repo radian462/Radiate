@@ -28,8 +28,13 @@ async def function_list(interaction: discord.Interaction):
 
 @tree.command(name='test', description='ヘルプを表示します')
 async def help(interaction: discord.Interaction):
+    data = {
+        "name": "John Doe",
+        "age": 30,
+        "city": "New York"
+    }
     with open('test.json', 'wt') as f:
-    json.dump(di, f)
+        json.dump(data, f)  # Fix the indentation here
 
 #helpコマンド
 @tree.command(name='help', description='ヘルプを表示します')
