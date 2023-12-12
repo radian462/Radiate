@@ -26,6 +26,16 @@ async def function_list(interaction: discord.Interaction):
   embed = discord.Embed(title="機能一覧",description="・AIチャット\n・DeepL翻訳\n・WolframAlpha計算知能\n・為替機能\n・短縮URL作成\n・QRコード作成\n・偽中国語作成\n・文章黒塗り")
   await interaction.response.send_message(embed=embed)
 
+@tree.command(name='test', description='ヘルプを表示します')
+async def help(interaction: discord.Interaction):
+    data = {
+        "name": "John Doe",
+        "age": 30,
+        "city": "New York"
+    }
+    with open('test.json', 'wt') as f:
+        json.dump(data, f)  # Fix the indentation here
+
 #helpコマンド
 @tree.command(name='help', description='ヘルプを表示します')
 async def help(interaction: discord.Interaction):
