@@ -3,6 +3,7 @@ import function_file.Translate as Translate
 import function_file.WolfarmAlpha as WolfarmAlpha
 import function_file.Exchanging as Exchanging
 import function_file.shorturl as shorturl
+import function_file.scp as scp
 import datetime
 import qrcode
 import re
@@ -213,6 +214,12 @@ async def blackpaint(interaction: discord.Interaction,text:str):
 @app_commands.describe(text="原文")                              
 async def fakechinese(interaction: discord.Interaction,text:str):
   await interaction.response.send_message(''.join(format(ord(char), '08b') for char in text))
+
+#ランダムscp
+@tree.command(name='scp', description='ランダムなSCPのリンクを生成します')
+async def exchange(interaction: discord.Interaction):
+  await interaction.response.defer()
+  await interaction.followup.send(scp.randomscp())
     
 keep_alive()
 client.run(os.getenv("Discord_token"))
