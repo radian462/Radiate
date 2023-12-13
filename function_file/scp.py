@@ -46,9 +46,9 @@ def get_metatitle(number, code):
   elif code == "-JP-J":
     url = "http://scp-jp.wikidot.com/joke-scps-jp"
 
-  if number < 1000:
+  if number < 1000 and code == "" or code == "-JP":
     url = f"http://scp-jp.wikidot.com/scp-series{code}"
-  else:
+  elif code == "" or code == "-JP":
     tipnumber = number//1000 + 1
     url = f"http://scp-jp.wikidot.com/scp-series{code}-{tipnumber}"
 
