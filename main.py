@@ -3,6 +3,7 @@ import function_file.Translate as Translate
 import function_file.WolfarmAlpha as WolfarmAlpha
 import function_file.Exchanging as Exchanging
 import function_file.shorturl as shorturl
+import function_file.scp as scp
 import datetime
 import qrcode
 import re
@@ -36,8 +37,9 @@ async def help(interaction: discord.Interaction):
     embed.add_field(name="・為替機能",value="/exchange [currency] [currency2]で為替を確認できます。[currency]→[currency2]の為替を表示します。一部仮想通貨に対応しています")
     embed.add_field(name="・短縮URL作成",value="/shorturl [url]で作成できます")
     embed.add_field(name="・QRコード作成",value="/qrcode [text]で作成できます ")
-    embed.add_field(name="・偽中国語作成",value="/fakechinese [text]で平仮名を削除します\nカタカナを消すかどうかの設定があります\n(アイデア元:People翻訳)")
+    embed.add_field(name="・偽中国語作成",value="/fakechinese [text]で平仮名を削除します\nカタカナを消すかどうかの設定があります")
     embed.add_field(name="・文章黒塗り",value="/blackpaint [text]でランダムで文字を黒塗りします\n開示書類のような文を作れます")
+    embed.add_field(name="・ランダムSCP",value="/scp でランダムなSCPの記事を表示します\nEN、J、EX、ARC、JP、JP-J、JP-EXに対応していますがSCP-8900-EX除く特殊な番号のSCPは出てきません")
     await interaction.response.send_message(embed=embed)
     
 #Llama2チャット
@@ -213,6 +215,12 @@ async def blackpaint(interaction: discord.Interaction,text:str):
 @app_commands.describe(text="原文")                              
 async def fakechinese(interaction: discord.Interaction,text:str):
   await interaction.response.send_message(''.join(format(ord(char), '08b') for char in text))
+
+#ランダムscp
+@tree.command(name='scp', description='ランダムなSCPのリンクを生成します')
+async def exchange(interaction: discord.Interaction):
+  await interaction.response.defer()
+  await interaction.followup.send(scp.randomscp())
     
 keep_alive()
 client.run(os.getenv("Discord_token"))
