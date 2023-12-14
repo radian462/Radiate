@@ -1,82 +1,58 @@
-from collections.abc import ItemsView
 import requests
 import random
 import re
 
-code = ["", "-EX", "-J", "-ARC", "-JP", "-JP-J", "-JP-EX"]
-weight_list = [8, 0.5, 0.5, 0.5, 5, 0.5, 0.5]
-metatitle = ""
-itemnumber = ""
+def change_itemnumber(number):
+  if number <= 99 and number > 10:
+    number = f"0{number}"
+  elif number < 10:
+    number = f"00{number}"
+  return number
 
-def change_scpnumber(number):
-    if number <= 99 and number > 10:
-        number = f"0{number}"
-    elif number < 10:
-        number = f"00{number}"
-    return number
+def get_scpdate():
+  scp_codes = ["", "-EX", "-J", "-ARC", "-JP", "-JP-J", "-JP-EX"]
+  weight_list = [8, 0.5, 0.5, 0.5, 5, 0.5, 0.5]
 
-def getdate():
-    global metatitle
-    global itemnumber
-    randomnumber = random.randint(1, 7999)
-    blueskyblue = random.randint(1, 8900)
-    randomcode = random.choices(code, weights=weight_list)[0]
+  while True:
+      number = random.randint(1, 7999)
+      blueskyblue = random.randint(1, 8900)
+      chosen_code = random.choices(scp_codes, weights=weight_list)[0]
+      url = f"http://scp-jp.wikidot.com/scp-{number}{chosen_code}"
 
-    if blueskyblue == 8900:
-        randomnumber = blueskyblue  # 青い青い空(SCP-8900-EX)を例外として入れる
+      if blueskyblue == 8900:#青い青い空を例外指定
+          number = blueskyblue
 
-    randomnumber = change_scpnumber(randomnumber)
-    metatitle = get_metatitle(randomnumber,randomcode)
-    itemnumber = f"SCP-{randomnumber}{randomcode}"
-    
-    return f"http://scp-jp.wikidot.com/scp-{randomnumber}{randomcode}"
+      if requests.get(url).status_code != 404:
+          return number, chosen_code, url
 
-def get_metatitle(number, code):
-  metatitle = ""
-  minicode = ""
-
-  if code == "-EX":
-    url = "http://scp-jp.wikidot.com/scp-ex"
+def get_metatitle(itemnumber,code):
+  #オブジェクトクラス取得先決定
+  if code == "" or code == "-JP":
+    if itemnumber < 1000:
+      url = f"http://scp-jp.wikidot.com/scp-series{code}"
+    else:
+      tipnumber = itemnumber//1000 + 1
+      url = f"http://scp-jp.wikidot.com/scp-series{code}-{tipnumber}"  
+  elif code == "-EX" or code == "-JP-EX":
+    url = f"http://scp-jp.wikidot.com/scp{code}"
   elif code == "-J":
     url = "http://scp-jp.wikidot.com/joke-scps"
   elif code == "-ARC":
     url = "http://scp-jp.wikidot.com/archived-scps"
-  elif code == "-JP-EX":
-    url = "http://scp-jp.wikidot.com/scp-jp-ex"
   elif code == "-JP-J":
     url = "http://scp-jp.wikidot.com/joke-scps-jp"
 
-  if number < 1000 and code == "" or code == "-JP":
-    url = f"http://scp-jp.wikidot.com/scp-series{code}"
-  elif code == "" or code == "-JP":
-    tipnumber = number//1000 + 1
-    url = f"http://scp-jp.wikidot.com/scp-series{code}-{tipnumber}"
-
-  number = change_scpnumber(number)
-
-  if code == "-JP":
-    minicode = "-jp"
-  elif code == "-EX":
-    minicode= "-ex"
-  elif code == "-J":
-    minicode= "j"
-  elif code == "-ARC":
-    minicode= "-arc"
-  elif code == "-JP-EX":
-    minicode= "-jp-ex"
-  elif code == "-JP-J":
-    minicode= "-j-jp"
+  minicode = code.lower()
+  itemnumber = change_itemnumber(itemnumber)
 
   response = requests.get(url)
-  match = re.search(fr'<li><a href="/scp-{number}{minicode}">SCP-{number}{code}</a>(.+)</li>', response.text)
+  match = re.search(fr'<li><a href="/scp-{itemnumber}{minicode}">SCP-{itemnumber}{code}</a>(.+)</li>',response.text)
   if match:
     metatitle = match.group(1)
     return metatitle
 
 def randomscp():
-  url = getdate()
+  scpdate = get_scpdate()
+  itemnumber = change_itemnumber(scpdate[0])
+  return f"SCP-{itemnumber}{scpdate[1]}{get_metatitle(scpdate[0],scpdate[1])}\n{(scpdate[2])}"
 
-  while requests.get(url).status_code == 404:
-    url = getdate()
-
-  return f"{itemnumber} {metatitle}\n{url}"
