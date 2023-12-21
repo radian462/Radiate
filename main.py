@@ -20,7 +20,9 @@ tree = app_commands.CommandTree(client)
 @client.event
 async def on_ready():
     print('起動しました')
+    scp.make_database()
     await tree.sync()
+    
 #機能リスト
 @tree.command(name='function_list', description='機能の一覧を表示します')
 async def function_list(interaction: discord.Interaction):
@@ -219,8 +221,7 @@ async def fakechinese(interaction: discord.Interaction,text:str):
 #ランダムscp
 @tree.command(name='scp', description='ランダムなSCPのリンクを生成します')
 async def exchange(interaction: discord.Interaction):
-  await interaction.response.defer()
-  await interaction.followup.send(scp.randomscp())
+  await interaction.response.send_message(scp.random_scp())    
     
 keep_alive()
 client.run(os.getenv("Discord_token"))
