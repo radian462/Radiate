@@ -221,7 +221,13 @@ async def fakechinese(interaction: discord.Interaction,text:str):
 #ランダムscp
 @tree.command(name='scp', description='ランダムなSCPのリンクを生成します')
 async def exchange(interaction: discord.Interaction):
-  await interaction.response.send_message(scp.random_scp())    
+  await interaction.response.send_message(scp.random_scp())
+
+#文字化けコマンド
+@tree.command(name='mojibake', description='文を文字化けさせます')
+@app_commands.describe(text="原文")                              
+async def mojibake(interaction: discord.Interaction,text:str):
+  await interaction.response.send_message(text.encode("UTF-8").decode('shift-jis', errors='ignore'))
     
 keep_alive()
 client.run(os.getenv("Discord_token"))
