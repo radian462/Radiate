@@ -228,6 +228,20 @@ async def exchange(interaction: discord.Interaction):
 @app_commands.describe(text="原文")                              
 async def mojibake(interaction: discord.Interaction,text:str):
   await interaction.response.send_message(text.encode("UTF-8").decode('shift-jis', errors='ignore'))
+
+#アナグラムコマンド
+@tree.command(name='anagram', description='アナグラムを作ります')
+@app_commands.describe(text="原文")               
+async def anagram(interaction: discord.Interaction,text:str):
+  textlist = list(text)
+  times = len(textlist)
+  anagram = ""  
+
+  for i in range(times):
+    randomtext = random.choice(textlist)
+    anagram = anagram + randomtext
+    textlist.remove(randomtext)
+  await interaction.response.send_message(anagram)
     
 keep_alive()
 client.run(os.getenv("Discord_token"))
