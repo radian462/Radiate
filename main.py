@@ -57,7 +57,7 @@ async def on_message(message):
         message_id = sent_message.id
         channel = message.channel 
         message_fetched = await channel.fetch_message(message_id)  
-        await message_fetched.add_reaction("<:GeminiPro:1189216785715699753>")
+        await message_fetched.add_reaction("<:GeminiPro:1189384963045478450>")
 
       else:
         sent_message = await message.channel.send(AIchat.chatllama(re.sub('<@1173980854507274323>', '',message.content)))
