@@ -44,7 +44,6 @@ async def help(interaction: discord.Interaction):
     embed.add_field(name="・ランダムSCP",value="/scp でランダムなSCPの記事を表示します\nEN、J、EX、ARC、JP、JP-J、JP-EXに対応していますがSCP-8900-EX除く特殊な番号のSCPは出てきません")
     await interaction.response.send_message(embed=embed)
 
-    
 #AIチャット
 @client.event
 async def on_message(message):
@@ -52,22 +51,20 @@ async def on_message(message):
       return
 
   if client.user.mentioned_in(message):
-      async with message.channel.typing():  
-        if message.content.lower().endswith(" gemini") or message.content.lower().endswith(" bard"):
-          sent_message =await message.channel.send(AIchat.chatgemini(re.sub('@Radiate', '',message.content)))
-          
-          message_id = sent_message.id
-          channel = message.channel 
-          message_fetched = await channel.fetch_message(message_id)  
-          await message_fetched.add_reaction("<:GeminiPro:1189216785715699753>")
+    async with message.channel.typing():  
+      if message.content.lower().endswith(" gemini") or message.content.lower().endswith(" bard"):
+        sent_message =await message.channel.send(AIchat.chatgemini(re.sub('<@1173980854507274323>', '',message.content)))
+        message_id = sent_message.id
+        channel = message.channel 
+        message_fetched = await channel.fetch_message(message_id)  
+        await message_fetched.add_reaction("<:GeminiPro:1189216785715699753>")
 
-        else:
-          
-          sent_message = await message.channel.send(AIchat.chatllama(re.sub('@Radiate', '',message.content)))
-          message_id = sent_message.id
-          channel = message.channel 
-          message_fetched = await channel.fetch_message(message_id)  
-          await message_fetched.add_reaction("<:ELYZAjapaneseLlama27b:1189216141873254420>")
+      else:
+        sent_message = await message.channel.send(AIchat.chatllama(re.sub('<@1173980854507274323>', '',message.content)))
+        message_id = sent_message.id
+        channel = message.channel 
+        message_fetched = await channel.fetch_message(message_id)  
+        await message_fetched.add_reaction("<:ELYZAjapaneseLlama27b:1189216141873254420>")
 
 #DeepL翻訳コマンド
 @tree.command(name='deepl', description='DeepLで翻訳します') 
