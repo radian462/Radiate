@@ -261,6 +261,12 @@ async def anagram(interaction: discord.Interaction,text:str):
     anagram = anagram + randomtext
     textlist.remove(randomtext)
   await interaction.response.send_message(anagram)
-    
+
+#文字コードコマンド
+@tree.command(name='utf8', description='文を文字コードにします')
+@app_commands.describe(text="原文")                              
+async def utf8(interaction: discord.Interaction,text:str):
+  await interaction.response.send_message(text.encode("UTF-8"))
+
 keep_alive()
 client.run(os.getenv("Discord_token"))
