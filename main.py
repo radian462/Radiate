@@ -51,20 +51,24 @@ async def on_message(message):
       return
 
   if client.user.mentioned_in(message):
-    async with message.channel.typing():  
-      if message.content.lower().endswith(" gemini") or message.content.lower().endswith(" bard"):
-        sent_message =await message.channel.send(AIchat.chatgemini(re.sub('<@1173980854507274323>', '',message.content)))
-        message_id = sent_message.id
-        channel = message.channel 
-        message_fetched = await channel.fetch_message(message_id)  
-        await message_fetched.add_reaction("<:GeminiPro:1189384963045478450>")
-
-      else:
-        sent_message = await message.channel.send(AIchat.chatllama(re.sub('<@1173980854507274323>', '',message.content)))
-        message_id = sent_message.id
-        channel = message.channel 
-        message_fetched = await channel.fetch_message(message_id)  
-        await message_fetched.add_reaction("<:ELYZAjapaneseLlama27b:1189216141873254420>")
+    message_text = re.sub('<@1173980854507274323>', '', message.content)
+    if message_text: 
+      async with message.channel.typing():
+        
+        if message_text.lower().startswith("#gemini") or message_text.lower().startswith("#bard"):
+            message_text = re.sub('#gemini', '', message_text)
+            message_text = re.sub('#bard', '', message_text)
+            sent_message = await message.channel.send(AIchat.chatgemini(message_text))
+            message_id = sent_message.id
+            channel = message.channel 
+            message_fetched = await channel.fetch_message(message_id)  
+            await message_fetched.add_reaction("<:GeminiPro:1189384963045478450>")
+        else:
+            sent_message = await message.channel.send(AIchat.chatllama(message_text))
+            message_id = sent_message.id
+            channel = message.channel 
+            message_fetched = await channel.fetch_message(message_id)  
+            await message_fetched.add_reaction("<:ELYZAjapaneseLlama27b:1189216141873254420>")
 
 #DeepL翻訳コマンド
 @tree.command(name='deepl', description='DeepLで翻訳します') 
