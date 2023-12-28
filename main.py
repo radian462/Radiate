@@ -124,7 +124,7 @@ async def deepl(interaction: discord.Interaction,text:str,lang:str,lang2:str=Non
 @tree.command(name='wolfarmalpha', description='WolfarmAlpha計算知能で計算します') 
 async def wolfarmalpha(interaction: discord.Interaction,formula:str):
   await interaction.response.send_message(WolfarmAlpha.calc(formula))
-  
+
 #為替コマンド
 @tree.command(name='exchange', description='為替を表示します') 
 @app_commands.describe(number="数",currency="通貨1",currency2="通貨2")
@@ -187,6 +187,7 @@ async def exchange(interaction: discord.Interaction,number:str,currency:str,curr
   embed.add_field(name=f"{number}{currency}→{value}{currency2}",value=datetime.datetime.now())
   await interaction.followup.send(embed=embed)
 
+
 #短縮URL作成コマンド
 @tree.command(name='shorturl', description='短縮URLを作成します') 
 async def shorturlbyshortio(interaction: discord.Interaction,url:str):
@@ -232,8 +233,9 @@ async def blackpaint(interaction: discord.Interaction,text:str):
 #2進数変換コマンド
 @tree.command(name='binary', description='2進数に変換します')
 @app_commands.describe(text="原文")                              
-async def fakechinese(interaction: discord.Interaction,text:str):
-  await interaction.response.send_message(''.join(format(ord(char), '08b') for char in text))
+async def binary(interaction: discord.Interaction,text:str):
+  byte_data = text.encode("utf-8")
+  await interaction.response.send_message(' '.join(format(byte, '08b') for byte in byte_data))
 
 #ランダムscp
 @tree.command(name='scp', description='ランダムなSCPのリンクを生成します')
