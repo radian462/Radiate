@@ -2,6 +2,7 @@ import fireworks.client
 import os
 import re
 import google.generativeai as genai
+import requests
 
 TOKEN = os.getenv("fireworks_api")
 
@@ -38,3 +39,16 @@ def chatgemini(text):
         temperature=0.1))
 
   return(response.text)
+
+def chatgpt(text):
+  url = "https://api-mebo.dev/api"
+  headers = {'content-type': 'application/json'}
+  item_data = {
+    "api_key": os.getenv('miibo_API'),
+    "agent_id": os.getenv('miibo_ID'),
+    "utterance": text,
+  }
+
+  r = requests.post(url,json=item_data,headers=headers)
+
+  return r.json()["bestResponse"]["utterance"]

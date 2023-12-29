@@ -63,6 +63,13 @@ async def on_message(message):
             channel = message.channel 
             message_fetched = await channel.fetch_message(message_id)  
             await message_fetched.add_reaction("<:GeminiPro:1189384963045478450>")
+        elif message_text.lower().startswith("#gpt"):
+          message_text = re.sub('#gpt', '', message_text)
+          sent_message = await message.channel.send(AIchat.chatgpt(message_text))
+          message_id = sent_message.id
+          channel = message.channel 
+          message_fetched = await channel.fetch_message(message_id)  
+          await message_fetched.add_reaction("<:GPT35turbo:1190420380347797564>")
         else:
             sent_message = await message.channel.send(AIchat.chatllama(message_text))
             message_id = sent_message.id
